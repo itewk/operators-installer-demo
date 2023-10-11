@@ -4,6 +4,8 @@ kind: ArgoCD
 metadata:
   name: openshift-gitops
 spec:
+  extraConfig:
+    kustomize.buildOptions: '--enable-helm'
   repo:
     volumeMounts:
     - mountPath: /etc/ssl/certs
