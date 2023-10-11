@@ -1,0 +1,30 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cluster-gitops-kustomize
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/itewk/operators-installer-demo.git
+      revision: main
+      files:
+      - path: '**/management/**/kustomization.yml'
+      - path: '**/management/kustomization.yml'
+      - path: '**/management/**/kustomization.yaml'
+      - path: '**/management/kustomization.yaml'
+  template:
+    metadata:
+      name: '{{path.basename}}--{{path[0]}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/itewk/operators-installer-demo.git
+        targetRevision:  main
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: true

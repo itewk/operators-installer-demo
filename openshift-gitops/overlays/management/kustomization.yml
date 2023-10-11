@@ -4,3 +4,4 @@ kind: Kustomization
 
 resources:
 - ../../base
+- ApplicationSet_cluster-gitops-kustomize.yml
