@@ -1,0 +1,23 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: namespace-configuration-operator
+
+helmCharts:
+- name: operators-installer
+  releaseName: namespace-configuration-operator-install
+  version: 2.3.7
+  repo: https://redhat-cop.github.io/helm-charts
+  valuesInline:
+    approveManualInstallPlanViaHook: false
+    operators:
+    - channel: alpha
+      installPlanApproval: Manual
+      name: namespace-configuration-operator
+      source: community-operators
+      sourceNamespace: openshift-marketplace
+      csv: namespace-configuration-operator.v1.2.2
+    operatorGroups:
+    - name: namespace-configuration-operator
+      createNamespace: true
