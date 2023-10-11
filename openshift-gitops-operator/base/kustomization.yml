@@ -1,0 +1,23 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: openshift-gitops-operator
+
+helmCharts:
+- name: operators-installer
+  releaseName: openshift-gitops-operator-install
+  version: 2.3.7
+  repo: https://redhat-cop.github.io/helm-charts
+  valuesInline:
+    operators:
+    - channel: gitops-1.9
+      installPlanApproval: Manual
+      name: openshift-gitops-operator
+      source: redhat-operators
+      sourceNamespace: openshift-marketplace
+      namespace: openshift-gitops-operator
+      csv: openshift-gitops-operator.v1.9.1
+    operatorGroups:
+    - name: openshift-gitops-operator
+      createNamespace: true
