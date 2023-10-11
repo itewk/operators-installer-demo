@@ -10,6 +10,7 @@ helmCharts:
   version: 2.3.7
   repo: https://redhat-cop.github.io/helm-charts
   valuesInline:
+    approveManualInstallPlanViaHook: false
     operators:
     - channel: gitops-1.9
       installPlanApproval: Manual
